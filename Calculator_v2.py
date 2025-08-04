@@ -6,6 +6,7 @@ Operations = {
 	'степень': lambda a,b: a ** b,
 	'остаток': lambda a,b: a % b,
 }
+# Символы для операций
 Operations_Symbols = {
 	'сумма': '+',
 	'вычитание': '-',
