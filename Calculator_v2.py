@@ -51,7 +51,9 @@ while True:
 
 		# Обработка ошибки деления на ноль
 		if op == 'деление' and nums[1] == 0:
-			raise ZeroDivisionError('Невозможно поделить на ноль')
+			print('Пожалуйста, введите второе число отличное от нуля')
+			while nums[1] == 0:
+				nums[1] = int(input('Введите второе число заново:'))
 
 		# Подсчет результата
 		result = Operations[op](*nums)
