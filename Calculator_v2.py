@@ -1,3 +1,4 @@
+import os
 Operations = {
 	'сумма': lambda a,b: a + b,
 	'вычитание': lambda a,b: a - b,
@@ -18,6 +19,17 @@ Operations_Symbols = {
 
 History = []
 
+# Чтение истории
+try:
+	if os.path.exists('history.txt'):
+		with open('history.txt', 'r') as file:
+			History = file.readlines()[-5:]
+			History = [line.strip() for line in lines]
+	else:
+		History = []
+except Exception as e:
+	print('Ошибка')
+
 print(f'Доступные операции: {", ".join(Operations.keys())}')
 
 
@@ -33,7 +45,7 @@ while True:
 			raise ValueError('Требуется ввести два числа')
 
 		#Ввод пользователем операции и перевод в нижний регистор
-		op = input('Введите операцию: ').lower()
+		op = input('Введите операцию: ').lower().strip()
 
 		# Вывод истории операций
 		if op == 'история':
@@ -43,6 +55,25 @@ while True:
 				print('Последние 5 операций:')
 				for i, record in enumerate(History[::-1], start = 1):
 					print(f'[{i}] {record}')
+			continue
+
+		# Сохранение истории в файл
+		if op == 'сохранить':
+			try:
+				with open('history.txt', 'w') as file:
+					for record in History:
+						file.write(record + '\n')
+					print('История сохранена в файл history.txt')
+			except PermissionError:
+			    print("Ошибка: нет прав на запись файла")
+			except OSError as e:
+			    print(f"Ошибка ОС: {str(e)}")
+			continue
+
+		# Очистка истории
+		if op == 'очистить':
+			History = []
+			print('История очищена')
 			continue
 
 		# Обработка ошибки когда пользователь ввел несуществующую операцию
