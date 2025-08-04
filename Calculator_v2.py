@@ -53,7 +53,7 @@ while True:
 		if op == 'деление' and nums[1] == 0:
 			print('Пожалуйста, введите второе число отличное от нуля')
 			while nums[1] == 0:
-				nums[1] = int(input('Введите второе число заново:'))
+				nums[1] = float(input('Введите второе число заново: '))
 
 		# Подсчет результата
 		result = Operations[op](*nums)
