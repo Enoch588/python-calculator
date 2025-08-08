@@ -9,16 +9,16 @@ while True:
 	try:
 
 		# Блок ввода чисел с валидацией
-	    nums = []
-	    for i in range(2):
-	        while True:
-	            try:
-	                num = float(input(f'Введите число {i+1}: '))
-	                nums.append(num)
-	                break
-	            except ValueError:
-	                print("Ошибка: введено не число. Пожалуйста, введите число.")
-
+		nums = []
+		for i in range(2):
+			while True:
+				try:
+					num = float(input(f'Введите число {i+1}: '))
+					nums.append(num)
+					break
+				except ValueError:
+					print("Ошибка: введено не число. Пожалуйста, введите число.")
+	                
 		# Ввод пользователем операции и перевод в нижний регистор
 		op = input('Введите операцию: ').lower().strip()
 

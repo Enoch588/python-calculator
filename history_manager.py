@@ -1,3 +1,4 @@
+import os
 # Функция вывода истории
 def show_history():
 		if not History:
@@ -28,12 +29,9 @@ def clear_history():
 History = []
 
 # Чтение истории
-try:
-	if os.path.exists('history.txt'):
-		with open('history.txt', 'r') as file:
-		    lines = file.readlines()
-		    History = [line.strip() for line in lines[-5:]]
-	else:
-		History = []
-except Exception as e:
-	print('Ошибка')
+if os.path.exists('history.txt'):
+	with open('history.txt', 'r') as file:
+		lines = file.readlines()
+		History = [line.strip() for line in lines[-5:]]
+else:
+	History = []
