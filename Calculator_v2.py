@@ -4,24 +4,22 @@ import operations
 
 print(f'Доступные операции: {", ".join(operations.Operations.keys())}')
 
-
 while True:
 	
 	try:
 
-		# Ввод пользователем чисел и преобразование их в список
-		nums = list(input('Ввведите два числа: ').split())
+		# Блок ввода чисел с валидацией
+	    nums = []
+	    for i in range(2):
+	        while True:
+	            try:
+	                num = float(input(f'Введите число {i+1}: '))
+	                nums.append(num)
+	                break
+	            except ValueError:
+	                print("Ошибка: введено не число. Пожалуйста, введите число.")
 
-		# Обработка ошибки когда пользователь ввел не 2 числа
-		if len(nums) != 2:
-			raise ValueError('Требуется ввести два числа')
-		
-		try:
-			nums = list(map(float, nums))
-		except ValueError:
-			print('Пожалуйста введите два ЧИСЛА')
-
-		#Ввод пользователем операции и перевод в нижний регистор
+		# Ввод пользователем операции и перевод в нижний регистор
 		op = input('Введите операцию: ').lower().strip()
 
 		# Вывод истории операций
