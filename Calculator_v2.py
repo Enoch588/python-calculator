@@ -1,63 +1,8 @@
 import os
-Operations = {
-	'сумма': lambda a,b: a + b,
-	'вычитание': lambda a,b: a - b,
-	'деление': lambda a,b: a / b,
-	'умножение': lambda a,b: a * b,
-	'степень': lambda a,b: a ** b,
-	'остаток': lambda a,b: a % b,
-}
-# Символы для операций
-Operations_Symbols = {
-	'сумма': '+',
-	'вычитание': '-',
-	'деление': '/',
-	'умножение': '*',
-	'степень': '^',
-	'остаток': '%',
-}
+from history_manager import *
+import operations
 
-# Функция вывода истории
-def show_history():
-		if not History:
-			print('История пуста')
-		else:
-			print('Последние 5 операций:')
-			for i, record in enumerate(History[::-1], start = 1):
-				print(f'[{i}] {record}')
-
-# Фукнция сохранения истории
-def save_history():
-	try:
-		with open('history.txt', 'w') as file:
-			for record in History:
-				file.write(record + '\n')
-			print('История сохранена в файл history.txt')
-	except PermissionError:
-			print("Ошибка: нет прав на запись файла")
-	except OSError as e:
-			print(f"Ошибка ОС: {str(e)}")
-
-# Функция очистки истории
-def clear_history():
-	History = []
-	with open('history.txt', 'w'):
-		pass
-
-History = []
-
-# Чтение истории
-try:
-	if os.path.exists('history.txt'):
-		with open('history.txt', 'r') as file:
-		    lines = file.readlines()  # Сохраняем строки
-		    History = [line.strip() for line in lines[-5:]]
-	else:
-		History = []
-except Exception as e:
-	print('Ошибка')
-
-print(f'Доступные операции: {", ".join(Operations.keys())}')
+print(f'Доступные операции: {", ".join(operations.Operations.keys())}')
 
 
 while True:
@@ -65,11 +10,16 @@ while True:
 	try:
 
 		# Ввод пользователем чисел и преобразование их в список
-		nums = list(map(float, input('Ввведите два числа: ').split()))
+		nums = list(input('Ввведите два числа: ').split())
 
 		# Обработка ошибки когда пользователь ввел не 2 числа
 		if len(nums) != 2:
 			raise ValueError('Требуется ввести два числа')
+		
+		try:
+			nums = list(map(float, nums))
+		except ValueError:
+			print('Пожалуйста введите два ЧИСЛА')
 
 		#Ввод пользователем операции и перевод в нижний регистор
 		op = input('Введите операцию: ').lower().strip()
@@ -91,7 +41,7 @@ while True:
 			continue
 
 		# Обработка ошибки когда пользователь ввел несуществующую операцию
-		if op not in Operations:
+		if op not in operations.Operations:
 			raise KeyError('Недоступная операция')
 
 		# Обработка ошибки деления на ноль
@@ -101,13 +51,13 @@ while True:
 				nums[1] = float(input('Введите второе число заново: '))
 
 		# Подсчет результата
-		result = Operations[op](*nums)
+		result = operations.Operations[op](*nums)
 
 		# Вывод результат с округлением
 		print(f'Результат: {result:.2f}' if result % 1 else f'Результат: {int(result)}')
 
 		# Сохранение операции в историю
-		str_history = f'{nums[0]} {Operations_Symbols[op]} {nums[1]} = {result:.2f}'
+		str_history = f'{nums[0]} {operations.Operations_Symbols[op]} {nums[1]} = {result:.2f}'
 		History.append(str_history)
 
 		#Ограничение истории до 5 операций
